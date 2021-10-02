@@ -1,0 +1,31 @@
+﻿@page "/header"
+    <div id="header">
+        <!--BEGIN-NAV-->
+        <ul id="nav">
+            <li><NavLink href="#" Match="NavLinkMatch.All">Trang chủ</NavLink></li>
+            <li><NavLink href="list_intro">Giới thiệu</NavLink></li>
+            <li><NavLink href="activities">Hoạt động</NavLink></li>
+            <li>
+                <NavLink href="">
+                    Tin tức - Sự kiện
+                    <i class="nav-arrow-down ti-angle-down"></i>
+                </NavLink>
+                <ul class="subnav">
+                    <li><NavLink href="events">Tin nổi bật</NavLink></li>
+                    <li><NavLink href="events">Hợp tác đầu tư</NavLink></li>
+                    <li><NavLink href="events">Kinh tế</NavLink></li>
+                    <li><NavLink href="events">Nhân đạo-Xã hội</NavLink></li>
+                </ul>
+            </li>
+            <li><NavLink href="travels">Đời sống - Du lịch</NavLink></li>
+            <li><NavLink href="histories">Văn hóa - Lịch sử</NavLink></li>
+            <li><NavLink href="#">Diễn đàn</NavLink></li>
+            <li><NavLink href="contact">Liên hệ</NavLink></li>
+        </ul>
+
+        <div class="login">
+            <i class=" ti-user login-icon"></i>
+            <span>Đăng nhập</span>
+        </div>
+    </div>
+    <!--END-NAV-->
