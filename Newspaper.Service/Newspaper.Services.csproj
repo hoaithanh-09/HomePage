@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="s\**" />
+    <EmbeddedResource Remove="s\**" />
+    <None Remove="s\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Newspaper.Data\Newspaper.Data.csproj" />
+    <ProjectReference Include="..\Newspaper.Utilities\Newspaper.Utilities.csproj" />
+    <ProjectReference Include="..\Newspaper.ViewModels\Newspaper.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

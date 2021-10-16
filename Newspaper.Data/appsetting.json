@@ -1,0 +1,8 @@
+{
+  {
+    "ConnectionStrings": {
+      "NewspaperConnect": "Server=HOAITHANH\\SQLEXPRESS;Database=Newspaper;Trusted_Connection=True;"
+    }
+  }
+
+}
