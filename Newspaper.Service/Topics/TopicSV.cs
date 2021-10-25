@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newspaper.ViewModels.PostInTopicViewModels;
+using Newspaper.ViewModels.PostViewModels;
 
 namespace Newspaper.Services.Topics
 {
@@ -20,30 +21,16 @@ namespace Newspaper.Services.Topics
         {
             _context = context;
         }
-
-        public async Task<int> Create(TopicCreateRequest request)
-        {
-            var topicAdd = new Topic()
-            {
-                Id = request.Id,
-                CreatedDate = request.CreatedDate,
-                Title = request.Title,
-                Description=request.Description,
-            };
-            _context.Add(topicAdd);
-            await _context.SaveChangesAsync();
-            return topicAdd.Id;
-        }
-
-        public async Task<int> Delete(int id)
+        public async Task<string> Delete(int id)
         {
             var topic = await _context.Topics.FindAsync(id);
-            if (topic != null)
+            if (topic == null)
             {
-                _context.Remove(topic);
-
+                return "Không tìm thấy chủ đề";
             }
-            return await _context.SaveChangesAsync();
+            _context.Topics.Remove(topic);
+            await _context.SaveChangesAsync();
+            return "Xóa thành công";
         }
 
         public async Task<List<TopicVM>> GetAll()
@@ -61,14 +48,39 @@ namespace Newspaper.Services.Topics
 
         public async Task<TopicVM> GetById(int id)
         {
-            var topic = await _context.Topics.FindAsync(id);
+            var postVM = new PostVM();
+            var topic = await _context.Topics.Include(x => x.PostInTopics).
+                Where(x => x.Id == id).FirstOrDefaultAsync();
             if (topic == null)
-                throw new MemberManagementException("Không tìm thấy!");
+                throw new MemberManagementException("Không tìm thấy chủ đề");
+
+            var postInTopic = await _context.PostInTopics.Where(x => x.TopicId == id).FirstOrDefaultAsync();
+            if (postInTopic != null)
+            {
+                var post = await _context.Posts.Where(x => x.Id == postInTopic.PostId).FirstOrDefaultAsync();
+                postVM = new PostVM()
+                {
+                    Id = post.Id,
+                    CreatedDate = post.CreatedDate,
+                    Content = post.Content,
+                    AuthorId = post.AuthorId,
+                    ModifiedDate=post.ModifiedDate,
+                    Title=post.Title,
+                };
+            }
+
+            var postTopic = new PostInTopicVM()
+            {
+                Post = postVM,
+            };
+
             var topicVM = new TopicVM()
             {
+                Id = topic.Id,
                 CreatedDate = topic.CreatedDate,
+                Description = topic.Description,
+                PostInTopics = postTopic,
                 Title = topic.Title,
-                Description = topic.Description
             };
             return topicVM;
         }
@@ -130,11 +142,12 @@ namespace Newspaper.Services.Topics
             }
             return topic;
         }
-        public async Task<int> AddPost(PostInTopicCreateRequest request)
+
+        public async Task<int> AddPost(int topicId, PostInTopicCreateRequest request)
         {
             var post = await _context.Posts.FindAsync(request.PostId);
 
-            if (post == null) 
+            if (post == null)
             {
                 throw new MemberManagementException("Thông tin không hợp lệ");
             }
@@ -150,5 +163,39 @@ namespace Newspaper.Services.Topics
             return post.Id;
         }
 
+        public async Task<ApiResult<string>> Create(TopicCreateRequest request)
+        {
+            var topic = await _context.Topics.FirstOrDefaultAsync(x => x.Title == request.Title);
+            if (topic != null)
+            {
+                return new ApiErrorResult<string>("Chủ đề đã tồn tại");
+            }
+
+            topic = new Topic()
+            {
+                Title = request.Title,
+                CreatedDate = request.CreatedDate,
+                Description = request.Description,
+            };
+
+            if (request.PostId != 0)
+            {
+                topic.PostInTopics = new List<PostInTopic>()
+                { new PostInTopic()
+                    {
+                        PostId = request.PostId,
+                        TopicId = topic.Id,
+                    }
+                };
+            }
+            _context.Topics.Add(topic);
+            var a = await _context.SaveChangesAsync();
+            if (a > 0)
+            {
+                return new ApiSuccessResult<string>("Tạo thành công");
+
+            }
+            return new ApiErrorResult<string>("Tạo mới thất bại");
+        }
     }
 }

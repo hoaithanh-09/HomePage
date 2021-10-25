@@ -9,7 +9,7 @@ namespace Newspaper.Data.Entities
     {
         public Image()
         {
-            Posts = new HashSet<Post>();
+            ImageInPosts = new HashSet<ImageInPost>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace Newspaper.Data.Entities
         public DateTime? DateCreated { get; set; }
         public long? FileSize { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<ImageInPost> ImageInPosts { get; set; }
     }
 }

@@ -58,6 +58,7 @@ namespace Newspaper.Services.Authors
                 throw new MemberManagementException("Không tìm thấy!");
             var authorVM = new AuthorVM()
             {
+                Id=author.Id,
                 Name = author.Name,
             };
             return authorVM;

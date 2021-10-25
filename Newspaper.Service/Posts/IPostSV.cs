@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newspaper.ViewModels.ImageInPostViewModels;
+using Newspaper.ViewModels.AuthorViewModels;
 
 namespace Newspaper.Services.Posts
 {
@@ -13,11 +15,14 @@ namespace Newspaper.Services.Posts
     {
         //Post
         Task<List<PostVM>> GetAll();
-        Task<int> Create(PostCreateRequest request);
-        Task<int> Delete(int id);
+        Task<ApiResult<string>> Create(PostCreateRequest request);
+        Task<string> Delete(int id);
         Task<PostVM> GetById(int id);
         Task<Post> Update(int id, PostEditRequest request);
         Task<PagedResult<PostVM>> GetPagedResult(GetPostPagingRequest request);
+        Task<int> AddAuthor(int postId, AuthorCreateRequest request);
+        Task<int> AddImage(int postId, ImageInPostCreateRequest request);
+
 
     }
 }

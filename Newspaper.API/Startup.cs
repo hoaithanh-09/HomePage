@@ -39,7 +39,7 @@ namespace Newspaper.API
             services.AddControllers()
         .AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddDbContext<NewspaperContext>(options =>
+        services.AddDbContext<NewspaperContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("NewspaperConnect")));
           
             services.AddTransient<IPostSV, PostSV>();

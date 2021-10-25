@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newspaper.Services", "Newsp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newspaper.ViewModels", "Newspaper.ViewModels\Newspaper.ViewModels.csproj", "{45B2DED5-C560-424E-A229-3C948788AC5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newspaper.Data", "Newspaper.Data\Newspaper.Data.csproj", "{2F4998EB-D465-494A-8980-E0B7FD750A0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newspaper.Data", "Newspaper.Data\Newspaper.Data.csproj", "{2F4998EB-D465-494A-8980-E0B7FD750A0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newspaper.Utilities", "Newspaper.Utilities\Newspaper.Utilities.csproj", "{D7306C5E-C9E4-4C84-AE8C-72978038CB5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newspaper.Utilities", "Newspaper.Utilities\Newspaper.Utilities.csproj", "{D7306C5E-C9E4-4C84-AE8C-72978038CB5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newspaper.Admin", "Newspaper.Admin\Newspaper.Admin.csproj", "{67EBEE1A-379D-4168-9316-7AB470A553D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D7306C5E-C9E4-4C84-AE8C-72978038CB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7306C5E-C9E4-4C84-AE8C-72978038CB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7306C5E-C9E4-4C84-AE8C-72978038CB5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67EBEE1A-379D-4168-9316-7AB470A553D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EBEE1A-379D-4168-9316-7AB470A553D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EBEE1A-379D-4168-9316-7AB470A553D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EBEE1A-379D-4168-9316-7AB470A553D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ namespace Newspaper.Utilities
 {
     public class SystemConstants
     {
-        public const string MainConnectionString = "MemberManagementConnext";
+        public const string MainConnectionString = "NewspaperConnect";
         public const string CartSession = "CartSession";
 
         public class AppSettings

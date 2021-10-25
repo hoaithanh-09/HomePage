@@ -9,6 +9,6 @@ namespace Newspaper.ViewModels.PostInTopicViewModels
 {
     public class PostInTopicVM
     {
-        public PostVM post { get; set; }
+        public PostVM Post { get; set; }
     }
 }

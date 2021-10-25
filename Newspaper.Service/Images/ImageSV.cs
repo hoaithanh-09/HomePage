@@ -62,6 +62,7 @@ namespace Newspaper.Services.Images
                 throw new MemberManagementException("Không tìm thấy!");
             var imageVM = new ImageVM()
             {
+                Id=image.Id,
                 ImagePath = image.ImagePath,
                 DateCreated = image.DateCreated,
                 FileSize = image.FileSize,

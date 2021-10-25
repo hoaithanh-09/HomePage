@@ -9,6 +9,7 @@ namespace Newspaper.Data.Entities
     {
         public Post()
         {
+            ImageInPosts = new HashSet<ImageInPost>();
             PostInTopics = new HashSet<PostInTopic>();
         }
 
@@ -16,12 +17,11 @@ namespace Newspaper.Data.Entities
         public string Title { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ImageId { get; set; }
         public int? AuthorId { get; set; }
         public string Content { get; set; }
 
         public virtual Author Author { get; set; }
-        public virtual Image Image { get; set; }
+        public virtual ICollection<ImageInPost> ImageInPosts { get; set; }
         public virtual ICollection<PostInTopic> PostInTopics { get; set; }
     }
 }

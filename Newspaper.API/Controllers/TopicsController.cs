@@ -68,9 +68,9 @@ namespace Newspaper.API.Controllers
 
         //add PostInTopic
         [HttpPost("Add PostInTopic")]
-        public async Task<ActionResult> AddPost([FromBody] PostInTopicCreateRequest request)
+        public async Task<ActionResult> AddPost([FromRoute] int id,[FromBody] PostInTopicCreateRequest request)
         {
-            var topic = await _topicSV.AddPost(request);
+            var topic = await _topicSV.AddPost(id,request);
             return Ok(topic);
         }
     }

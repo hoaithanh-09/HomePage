@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newspaper.ViewModels.AuthorViewModels;
+using Newspaper.ViewModels.ImageViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +14,11 @@ namespace Newspaper.ViewModels.PostViewModels
         public string Title { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ImageId { get; set; }
         public int? AuthorId { get; set; }
         public string Content { get; set; }
+        public int ImageId { get; set; }
+        public List<AuthorVM> Authors { get; set; }
+        public List<ImageVM> Images { get; set; }
 
     }
 }

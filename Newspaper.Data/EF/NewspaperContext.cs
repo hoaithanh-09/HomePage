@@ -20,6 +20,7 @@ namespace Newspaper.Data.EF
 
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<ImageInPost> ImageInPosts { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostInTopic> PostInTopics { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
@@ -50,6 +51,26 @@ namespace Newspaper.Data.EF
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<ImageInPost>(entity =>
+            {
+                entity.HasKey(e => new { e.ImageId, e.PostId })
+                    .HasName("PK__ImageInP__EFB7D10D89F1BD63");
+
+                entity.ToTable("ImageInPost");
+
+                entity.HasOne(d => d.Image)
+                    .WithMany(p => p.ImageInPosts)
+                    .HasForeignKey(d => d.ImageId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ImageInPo__Image__5FB337D6");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.ImageInPosts)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ImageInPo__PostI__60A75C0F");
+            });
+
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.ToTable("Post");
@@ -63,18 +84,13 @@ namespace Newspaper.Data.EF
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.AuthorId)
-                    .HasConstraintName("FK__Post__AuthorId__3C69FB99");
-
-                entity.HasOne(d => d.Image)
-                    .WithMany(p => p.Posts)
-                    .HasForeignKey(d => d.ImageId)
-                    .HasConstraintName("FK__Post__ImageId__3D5E1FD2");
+                    .HasConstraintName("FK__Post__AuthorId__5CD6CB2B");
             });
 
             modelBuilder.Entity<PostInTopic>(entity =>
             {
                 entity.HasKey(e => new { e.TopicId, e.PostId })
-                    .HasName("PK__PostInTo__988F295CE2D4C5A8");
+                    .HasName("PK__PostInTo__988F295C94CE6EA5");
 
                 entity.ToTable("PostInTopic");
 
@@ -82,13 +98,13 @@ namespace Newspaper.Data.EF
                     .WithMany(p => p.PostInTopics)
                     .HasForeignKey(d => d.PostId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PostInTop__PostI__412EB0B6");
+                    .HasConstraintName("FK__PostInTop__PostI__6477ECF3");
 
                 entity.HasOne(d => d.Topic)
                     .WithMany(p => p.PostInTopics)
                     .HasForeignKey(d => d.TopicId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PostInTop__Topic__403A8C7D");
+                    .HasConstraintName("FK__PostInTop__Topic__6383C8BA");
             });
 
             modelBuilder.Entity<Topic>(entity =>

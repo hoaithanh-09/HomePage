@@ -26,7 +26,7 @@ namespace Newspaper.API.Controllers
             var author = await _authorSV.CreateAuthor(request);
             return Ok(author);
         }
-        [HttpGet("GetAllImages")]
+        [HttpGet("GetAllAuthors")]
         public async Task<IActionResult> GetAllAuthors()
         {
             var author = await _authorSV.GetAllAuthors();
@@ -59,7 +59,7 @@ namespace Newspaper.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpGet("GetPagedResultImage")]
+        [HttpGet("GetPagedResultAuthor")]
         public async Task<IActionResult> GetPagedResultAuthor([FromQuery] GetAuthorPagingRequest request)
         {
             var author = await _authorSV.GetPagedResultAuthor(request);

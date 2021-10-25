@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newspaper.Services.Posts;
+using Newspaper.ViewModels.ImageInPostViewModels;
 using Newspaper.ViewModels.PostViewModels;
 
 namespace Newspaper.API.Controllers
 {
-   
+    [Route("api/[controller]")]
+    [ApiController]
+
     public class PostsController: ControllerBase
     {
         private readonly IPostSV _postSV;
@@ -61,7 +64,15 @@ namespace Newspaper.API.Controllers
             var post = await _postSV.GetPagedResult(request);
             return Ok(post);
         }
-       
+        //add ImageInPost
+        [HttpPost("Add ImageInPost")]
+        public async Task<ActionResult> AddImage([FromRoute] int id,[FromBody] ImageInPostCreateRequest request)
+        {
+            var post = await _postSV.AddImage(id,request);
+            return Ok(post);
+        }
+
     }
     
 }
+

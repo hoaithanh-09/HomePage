@@ -13,11 +13,11 @@ namespace Newspaper.Services.Topics
     public interface ITopicSV
     {
         Task<List<TopicVM>> GetAll();
-        Task<int> Create(TopicCreateRequest request);
-        Task<int> Delete(int id);
+        Task<ApiResult<string>> Create(TopicCreateRequest request);
+        Task<string> Delete(int id);
         Task<TopicVM> GetById(int id);
         Task<Topic> Update(int id, TopicEditRequest request);
         Task<PagedResult<TopicVM>> GetPagedResult(GetTopicPagingRequest request);
-        Task<int> AddPost(PostInTopicCreateRequest request);
+        Task<int> AddPost(int topicId,PostInTopicCreateRequest request);
     }
 }

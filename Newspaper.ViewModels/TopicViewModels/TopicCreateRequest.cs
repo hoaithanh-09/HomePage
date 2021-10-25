@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newspaper.ViewModels.PostViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace Newspaper.ViewModels.TopicViewModels
         public string Title { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string Description { get; set; }
+        public int PostId { get; set; }
+        public List<PostVM> Post { get; set; }
     }
 }
