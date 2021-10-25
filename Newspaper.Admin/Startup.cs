@@ -1,4 +1,3 @@
-using HomePage.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newspaper.Admin.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +41,7 @@ namespace Newspaper.Admin
             services.AddTransient<IAuthorApi, AuthorApi>();
             services.AddTransient<IPostApi, PostApi>();
             services.AddTransient<IImageApi, ImageApi>();
+            services.AddTransient<ITopicApi , TopicApi>();
             IMvcBuilder builder = services.AddRazorPages();
 
         }

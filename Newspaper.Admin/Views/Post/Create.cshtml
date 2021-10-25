@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>THÊM MỚI BÀI VIẾT</h2>
+<h1>Create</h1>
 
-<br />
+<h4>PostCreateRequest</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,7 +33,7 @@
                 <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Authors" class="control-label"></label>
+                <label asp-for="AuthorId" class="control-label"></label>
                 <input asp-for="AuthorId" class="form-control" />
                 <span asp-validation-for="AuthorId" class="text-danger"></span>
             </div>
@@ -48,16 +48,16 @@
                 <span asp-validation-for="ImageId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+
         </form>
-    </div>
+</div>
 </div>
 
 <div>
-    <a asp-action="Index">Trở về</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

@@ -1,14 +1,14 @@
-﻿using HomePage.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newspaper.Admin.Services;
 using Newspaper.ViewModels.ImageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomePage.Controllers
+namespace Newspaper.Admin.Controllers
 {
     public class ImageController:BaseController
     {

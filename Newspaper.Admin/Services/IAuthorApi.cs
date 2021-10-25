@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomePage.Services
+namespace Newspaper.Admin.Services
 {
     public interface IAuthorApi
     {

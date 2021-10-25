@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomePage.Services
+namespace Newspaper.Admin.Services
 {
     public class PostApi : BaseApi, IPostApi
     {
@@ -46,7 +46,7 @@ namespace HomePage.Services
             requestContent.Add(new StringContent(request.CreatedDate.ToString()), "CreateDate");
             requestContent.Add(new StringContent(request.ModifiedDate.ToString()), "ModifiedDate");
 
-            requestContent.Add(new StringContent(request.Authors.ToString()), "AuthorId");
+            requestContent.Add(new StringContent(request.AuthorId.ToString()), "AuthorId");
             requestContent.Add(new StringContent(request.ImageId.ToString()), "ImageId");
 
 
@@ -62,6 +62,19 @@ namespace HomePage.Services
         public async Task<bool> Delete(int id)
         {
             return await Delete($"api/Posts/DeletePost" + id);
+        }
+
+        public async Task<List<PostVM>> GetAll()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("JWT");
+
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync($"/api/Topics/GetALl");
+            var body = await response.Content.ReadAsStringAsync();
+            var post = JsonConvert.DeserializeObject<List<PostVM>>(body);
+            return post;
         }
 
         public async  Task<PostVM> GetById(int id)

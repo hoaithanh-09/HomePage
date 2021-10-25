@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomePage.Services
+namespace Newspaper.Admin.Services
 {
     public interface IPostApi
     {
+        Task<List<PostVM>> GetAll();
         Task<PagedResult<PostVM>> GetPostPaging(GetPostPagingRequest request);
 
         Task<ApiResult<string>> Create(PostCreateRequest request);

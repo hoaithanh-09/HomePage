@@ -38,6 +38,7 @@ namespace Newspaper.Services.Topics
             var query = from f in _context.Topics select f;
             var topic = await query.Select(x => new TopicVM()
             {
+                Id=x.Id,
                 CreatedDate = x.CreatedDate,
                 Title = x.Title,
                 Description = x.Description

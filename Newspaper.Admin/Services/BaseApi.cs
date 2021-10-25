@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace HomePage.Services
+namespace Newspaper.Admin.Services
 {
     public class BaseApi
     {

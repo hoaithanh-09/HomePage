@@ -1,46 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using Newspaper.Admin.Controllers;
 using Newspaper.Admin.Services;
-using Newspaper.ViewModels.PostViewModels;
+using Newspaper.ViewModels.TopicViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Newspaper.Admin.Controllers
+namespace Newspaper.Admin.Admin.Controllers
 {
-    public class PostController : BaseController
+    public class TopicController:BaseController
     {
-        private readonly IPostApi _iPostApi;
+        private readonly ITopicApi _iTopicApi;
         private readonly IConfiguration _configuration;
-        private readonly IImageApi _iImageApi;
-        private readonly IAuthorApi _iAuthorApi;
-        public PostController(
-            IPostApi iPostApi,
+        private readonly IPostApi _iPostApi;
+        public TopicController(
+            ITopicApi iTopicApi,
             IConfiguration configuration,
-            IImageApi iImageApi,
+            IPostApi iPostApi,
             IAuthorApi iAuthorApi
             )
         {
+            _iTopicApi = iTopicApi;
             _iPostApi = iPostApi;
             _configuration = configuration;
-            _iImageApi = iImageApi;
-            _iAuthorApi = iAuthorApi;
         }
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var request = new GetPostPagingRequest()
+            var request = new GetTopicPagingRequest()
             {
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
             };
 
-            var data = await _iPostApi.GetPostPaging(request);
+            var data = await _iTopicApi.GetPostPaging(request);
             ViewBag.Keyword = keyword;
 
             if (TempData["result"] != null)
@@ -52,27 +51,24 @@ namespace Newspaper.Admin.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            var images = await _iImageApi.GetAll();
-            var authors = await _iAuthorApi.GetAll();
-            var postCreateRequest = new PostCreateRequest();
-
-            postCreateRequest.Images = images;
-            postCreateRequest.Authors = authors;
-            return View(postCreateRequest);
+            var posts = await _iPostApi.GetAll();
+            var topicCreateRequest = new TopicCreateRequest();
+            ViewBag.address = new SelectList(posts, "Id", "Title");
+            topicCreateRequest.Post = posts;
+            return View(topicCreateRequest);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(PostCreateRequest request)
+        public async Task<ActionResult> Create( TopicCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
-            var images = await _iImageApi.GetAll();
-            var authors = await _iAuthorApi.GetAll();
+            var posts = await _iPostApi.GetAll();
 
-            request.Images = images;
-            request.Authors = authors;
-            var result = await _iPostApi.Create(request);
+            request.Post = posts;
+  
+            var result = await _iTopicApi.Create(request);
 
             if (!result.IsSuccessed)
             {
@@ -82,38 +78,42 @@ namespace Newspaper.Admin.Controllers
             if (result.IsSuccessed)
             {
                 TempData["result"] = result.ResultObj;
-                return RedirectToAction("Index", "Post");
+                return RedirectToAction("Index", "Topic");
             }
             return View(request);
         }
         public async Task<IActionResult> Details(int id)
         {
-            var result = await _iPostApi.GetById(id);
+            var result = await _iTopicApi.GetById(id);
             return View(result);
         }
+        public async void SetViewBag(int? seletedId = null)
+        {
+            var postAdd = await _iPostApi.GetAll();
 
+            ViewBag.HousldRepre = new SelectList(postAdd, "Id", "Name", seletedId);
+        }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var post = await _iPostApi.GetById(id);
-            var request = new PostEditRequest()
+            var topic = await _iTopicApi.GetById(id);
+            var request = new TopicEditRequest()
             {
-                Title = post.Title,
-                Content = post.Content,
-                CreatedDate = post.CreatedDate,
-                ModifiedDate = post.ModifiedDate,
+                Title = topic.Title,
+                Description = topic.Description,
+                CreatedDate = topic.CreatedDate,
             };
             return View(request);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, PostEditRequest request)
+        public async Task<IActionResult> Edit(int id, TopicEditRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _iPostApi.Update(id, request);
+            var result = await _iTopicApi.Update(id, request);
             if (result)
             {
                 TempData["result"] = "Cập nhật thành công";
@@ -126,22 +126,22 @@ namespace Newspaper.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var post = await _iPostApi.GetById(id);
-            var request = new PostDeleteRequest()
+            var topic = await _iTopicApi.GetById(id);
+            var request = new TopicDeleteRequest()
             {
-                Id = post.Id,
+                Id = topic.Id,
             };
             return View(request);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, PostDeleteRequest request)
+        public async Task<IActionResult> Delete(int id, TopicDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _iPostApi.Delete(request.Id);
+            var result = await _iTopicApi.Delete(request.Id);
             if (result)
             {
                 TempData["result"] = "Cập nhật thành công";
