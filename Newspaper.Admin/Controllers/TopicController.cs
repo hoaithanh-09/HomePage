@@ -53,7 +53,6 @@ namespace Newspaper.Admin.Admin.Controllers
         {
             var posts = await _iPostApi.GetAll();
             var topicCreateRequest = new TopicCreateRequest();
-            ViewBag.address = new SelectList(posts, "Id", "Title");
             topicCreateRequest.Post = posts;
             return View(topicCreateRequest);
         }
